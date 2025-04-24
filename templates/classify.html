@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Vegetable Classification</h2>
+<form method="POST" enctype="multipart/form-data">
+    <label>Select Vegetable Image:</label><br>
+    <input type="file" name="image" required><br><br>
+    <input type="submit" value="Classify">
+</form>
+{% if prediction %}
+    <h3>Prediction: <span style="color:green;">{{ prediction }}</span></h3>
+    <img src="{{ url_for('static', filename='upload.jpg') }}" width="200">
+{% endif %}
+{% endblock %}
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const imgElement = document.getElementById("imagePreview");
+            imgElement.style.display = "block";  // Show the image element
+            imgElement.src = e.target.result;   // Set the source to the selected image
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);  // Read the file and trigger the onload event
+        }
+    }
+</script>
+
